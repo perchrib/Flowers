@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flowers</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'main.css') }}">
+</head>
+<body>
+	<h1>Flower Power</h1>
+	<button id="btnTurnOn" class="btn">
+		Water me now!
+	</button>
+	<br />
+	<img id="imgFlower" src="static/flower.jpeg" />
+	<img id="imgLoading" src="static/loading.gif" />
+
+
+</body>
+</html>
+
+<script>
+	var sendRequest = function(url, httpMethod, callback, data=null){
+		xhr = new XMLHttpRequest();
+		xhr.open(httpMethod, url, true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		xhr.onreadystatechange = function() {
+			if (this.readyState === XMLHttpRequest.DONE && this.status === 204 || this.status === 200 || this.status === 201) {
+				callback();
+			}
+		}
+		xhr.send();
+		
+	}
+	
+	document.getElementById("btnTurnOn").addEventListener("click", function(event){
+		console.log("Click!!!");
+		document.getElementById("imgFlower").style.display = "none";
+		document.getElementById("imgLoading").style.display = "inline-block";
+		let callback = function(){
+			console.log("Watering ON YEAHHH");
+			document.getElementById("imgFlower").style.display = "inline-block";
+			document.getElementById("imgLoading").style.display = "none";
+		}
+		
+		sendRequest('/turnOn', 'POST', callback);
+		
+	});
+	
+	
+</script>
