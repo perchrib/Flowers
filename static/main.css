@@ -1,8 +1,25 @@
 .btn {
 	min-height: 250px;
 	width: 60%;
-	font:inherit
+	font:inherit;
+	cursor: pointer;
+	outline: none;
+	color: #fff;
+	background-color: #4CAF50;
+	border: solid black 4px;
+	border-radius: 15px;
+	box-shadow: 0 20px black;
 }
+
+.btn:hover{
+	background-color: #3e8e41
+}
+.btn:active {
+	background-color: #3e8e41;
+	box-shadow: 0 20px #666;
+	transform: translateY(15px);
+}
+
 h1{
 	font-size: 5rem;
 }
@@ -13,6 +30,10 @@ body{
 	text-align: center;
 	font-family: monospace;
 	font-size: 3rem;
+}
+
+img{
+	padding: 30px 20px;
 }
 
 #imgLoading{

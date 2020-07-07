@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 
 
@@ -25,17 +25,19 @@ def hello_world():
 def turnOn():
     channel = 10
     http_status_code = 204
-    try:
-        gpio_setup(channel)
-        motor_on(channel)
-        time.sleep(2)
-        motor_off(channel)
+    time.sleep(10)
+    # try:
+    #     gpio_setup(channel)
+    #     motor_on(channel)
+    #     time.sleep(2)
+    #     motor_off(channel)
         
-    except:
-        http_status_code = 501
-    finally:
-        GPIO.cleanup()
+    # except:
+    #     http_status_code = 501
+    # finally:
+    #     GPIO.cleanup()
     return "", http_status_code
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.69', port='5300')
+    raspberry_local_ip = '192.168.0.69'
+    app.run(host='0.0.0.0', port='5300')
