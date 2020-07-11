@@ -7,12 +7,22 @@
 </head>
 
 <body>
-	<h1>Flower Power</h1>
-	<button id="btnTurnOn" class="btn">
-		Water me now!
-	</button>
-	<img id="imgFlower" src="static/flower.jpeg" />
-	<img id="imgLoading" src="static/loading.gif" />
+	<div class="flex-container">
+		<h1>Flower Power</h1>
+		<button id="btnTurnOn" class="btn">
+			Water me now!
+		</button>
+		<img id="imgFlower" src="static/flower.jpeg" />
+		<img id="imgLoading" src="static/loading.gif" />
+		<div id="checkmark">
+			<span>Watering: </span>
+			<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+				<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+				<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+			</svg>
+		</div>
+	</div>
+
 
 
 </body>
@@ -26,8 +36,14 @@
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 		xhr.onreadystatechange = function () {
-			if (this.readyState === XMLHttpRequest.DONE && this.status === 204 || this.status === 200 || this.status === 201) {
-				callback();
+			if (this.readyState === XMLHttpRequest.DONE) {
+				var status = xhr.status;
+				if (status === 0 || (status >= 200 && status < 400)) {
+					callback()
+				} else {
+					document.getElementById("checkmark").innerHTML = "Something went wrong. Status: " + this.status + " Message: " + this.statusText;
+					document.getElementById("checkmark").style.display = "block";
+				}
 			}
 		}
 		xhr.send();
@@ -35,13 +51,17 @@
 	}
 
 	document.getElementById("btnTurnOn").addEventListener("click", function (event) {
-		console.log("Click!!!");
+		event.target.disabled = true;
 		document.getElementById("imgFlower").style.display = "none";
 		document.getElementById("imgLoading").style.display = "inline-block";
 		let callback = function () {
 			console.log("Watering ON YEAHHH");
 			document.getElementById("imgFlower").style.display = "inline-block";
 			document.getElementById("imgLoading").style.display = "none";
+			let checkmark = document.getElementById("checkmark");
+			checkmark.style.display = "inline-block";
+			setTimeout(function () { checkmark.style.display = "none" }, 5000);
+			event.target.disabled = false;
 		}
 
 		sendRequest('/turnOn', 'POST', callback);

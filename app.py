@@ -25,7 +25,7 @@ def hello_world():
 def turnOn():
     channel = 10
     http_status_code = 204
-    time.sleep(10)
+    time.sleep(3)
     # try:
     #     gpio_setup(channel)
     #     motor_on(channel)
@@ -40,4 +40,4 @@ def turnOn():
 
 if __name__ == '__main__':
     raspberry_local_ip = '192.168.0.69'
-    app.run(host='0.0.0.0', port='5300')
+    app.run(host='0.0.0.0', port='5302')
